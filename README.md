@@ -12,3 +12,5 @@ Simple template for Rest API using FastAPI &amp; PostgreSQL
    
 # Run
 1. uvicorn main:app --reload
+2. To test api on http://127.0.0.1:8000/docs
+3. The detail of api on http://127.0.0.1:8000/redoc
