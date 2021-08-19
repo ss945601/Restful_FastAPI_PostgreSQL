@@ -1,7 +1,8 @@
 
 from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
-from router import user
+from router import users # add router
+
 app = FastAPI(title = "REST API using FastAPI & PostgreSQL")
 app.add_middleware(
     CORSMiddleware,
@@ -10,4 +11,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.include_router(user.router)
+routers = [users] # add router
+for item in routers:
+    app.include_router(item.router)
+
+
