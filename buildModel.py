@@ -1,17 +1,16 @@
 
 #### build setting ####
 
-table_name = "user"
+table_name = "users"
 primaryKeyName = "id" # primary key
 primaryKeyType = "int" #  int str date....
-optional = "	optional" # can be null
-# no primary key in inputData
+optional = " optional" # can be null
+# no primary key in inputData, Mapping to function "TypeConvert"
 inputData = f"""
-account	varchar
-password	varchar
-birth	timestamp{optional}
+account varchar
+password varchar
+birth timestamp{optional}
 """
-
 #### build setting ####
 
 
@@ -22,19 +21,19 @@ def TypeConvert(inputType):
         'timestamp': 'datetime',
         'smallint':'int'
     }.get(inputType,'str') 
-
+inputData.replace("	"," ")
 cols = inputData.split("\n")
 sqlalchemyCols = f"    sqlalchemy.Column('{primaryKeyName}', primary_key=True),\n"
 classStr = f"class {table_name}In(BaseModel):\n"
 valStr = ""
 for col in cols:
     if col != "":
-        name = col.split("	")[0]
-        typename = col.split("	")[1]
+        name = col.split(" ")[0]
+        typename = col.split(" ")[1]
         allownull = False
         valStr += f"{name} = {table_name}.{name}, "
-        if len(col.split("	")) > 2:
-            allownull = True if col.split("	")[2]== "optional" else False
+        if len(col.split(" ")) > 2:
+            allownull = True if col.split(" ")[2]== "optional" else False
         if allownull:
             classStr += f"    {name}: Optional[{TypeConvert(typename)}]\n"
         else:
@@ -67,6 +66,8 @@ database, metadata = DbConnect.getDataBase()
 {classStr}
 
 {classStr.replace("In(BaseModel)","(BaseModel)") + f"    {primaryKeyName}:{primaryKeyType}"}
+
+
 @router.on_event("startup")
 async def startup():
     await database.connect()
