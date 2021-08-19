@@ -1,10 +1,10 @@
 
 #### build setting ####
 
-table_name = "users"
+table_name = "user"
 primaryKeyName = "id" # primary key
-primaryKeyType = "int"
-optional = "	optional"
+primaryKeyType = "int" #  int str date....
+optional = "	optional" # can be null
 # no primary key in inputData
 inputData = f"""
 account	varchar
@@ -82,7 +82,7 @@ async def read_{table_name}(skip: int = 0, take: int = 20):
     return await database.fetch_all(query)
 
 @router.get("/{"{"+primaryKeyName+"}"}/", response_model={table_name}, status_code = status.HTTP_200_OK)
-async def read_{table_name}({primaryKeyName}: int):
+async def read_{table_name}({primaryKeyName}: {primaryKeyType}):
     query = {table_name+"_db"}.select().where({table_name+"_db"}.c.{primaryKeyName} == {primaryKeyName})
     return await database.fetch_one(query)
 
@@ -93,13 +93,13 @@ async def create_{table_name}({table_name}: {table_name}In):
     return {"{**"}{table_name}{".dict(), '"}{primaryKeyName}{"': last_record_"}{primaryKeyName+"}"}
 
 @router.put("/{"{"+primaryKeyName+"}"}/", response_model={table_name}, status_code = status.HTTP_200_OK)
-async def update_{table_name}({primaryKeyName}: int, {table_name}: {table_name}In):
+async def update_{table_name}({primaryKeyName}: {primaryKeyType}, {table_name}: {table_name}In):
     query = {table_name+"_db"}.update().where({table_name+"_db"}.c.{primaryKeyName} == {primaryKeyName}).values({valStr})
     await database.execute(query)
     return {"{**"}{table_name}{".dict(), '"}{primaryKeyName}': {primaryKeyName+"}"}    
 
 @router.delete("/{"{"+primaryKeyName+"}"}/", status_code = status.HTTP_200_OK)
-async def remove_{table_name}({primaryKeyName}: int):
+async def remove_{table_name}({primaryKeyName}: {primaryKeyType}):
     query = {table_name+"_db"}.delete().where({table_name+"_db"}.c.{primaryKeyName} == {primaryKeyName})
     await database.execute(query)
     return {"{'message':'Delete success'}"}
