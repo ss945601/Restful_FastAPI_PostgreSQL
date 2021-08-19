@@ -21,7 +21,7 @@ def TypeConvert(inputType):
         'timestamp': 'datetime',
         'smallint':'int'
     }.get(inputType,'str') 
-inputData.replace("	"," ")
+inputData = inputData.replace("	"," ")
 cols = inputData.split("\n")
 sqlalchemyCols = f"    sqlalchemy.Column('{primaryKeyName}', primary_key=True),\n"
 classStr = f"class {table_name}In(BaseModel):\n"
