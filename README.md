@@ -8,7 +8,25 @@ Simple template for Rest API using FastAPI &amp; PostgreSQL
 # Setting
 1. edit "db_connect.py", set your PostgreSQL db info.
 2. edit router & table name & columns in "router/user.py". # (User RestfulAPI)
-3. user.router should add in "main.py". 
+3. Auto create files like "router/user.py", just edit "buildModel.py" as follow and run "python buildModel.py" 
+   the .py file is added in the "router" folder.
+#### build setting ####
+
+table_name = "users"
+primaryKeyName = "id" # primary key
+primaryKeyType = "int"
+optional = "	optional"
+# no primary key in inputData(db column name & type)
+inputData = f"""
+account	varchar
+password	varchar
+birth	timestamp{optional}
+"""
+
+#### build setting ####
+
+
+4. user.router should add in "main.py". 
    
 # Run
 1. uvicorn main:app --reload
