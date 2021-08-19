@@ -10,7 +10,9 @@ Simple template for Rest API using FastAPI &amp; PostgreSQL
 2. Edit router & table name & columns in "router/user.py". # (User RestfulAPI)
 3. Auto create files like "router/users.py", just edit the setting scope in the "buildModel.py" and run "python buildModel.py" 
    the .py file will be added in the "router" folder.
+   
    (Hint) The sql command to get column_name, column_type, optional(IS_NULLABLE): 
+      
       SELECT
           column_name,
           data_type,
