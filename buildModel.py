@@ -106,6 +106,6 @@ async def remove_{table_name}({primaryKeyName}: int):
 
 """
 
-f = open(__file__.replace("/buildModel.py","/router/")+table_name+".py", "w")
+f = open(__file__.replace("buildModel.py","router/")+table_name+".py", "w")
 f.write(pageStr)
 f.close()
