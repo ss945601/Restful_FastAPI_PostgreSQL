@@ -1,15 +1,15 @@
 
 #### build setting ####
 
-table_name = "app_page"
+table_name = "users"
 primaryKeyName = "id" # primary key
 primaryKeyType = "int"
 optional = "	optional"
 # no primary key in inputData
 inputData = f"""
-name	varchar
-description	varchar
-visibility	enum
+account	varchar
+password	varchar
+birth	timestamp{optional}
 """
 
 #### build setting ####
